@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,23 +34,31 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
-        // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
-        // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        Room suroeste, start, sureste, oeste, centro, este, noroeste, meta, noreste;
 
-        currentRoom = outside;  // start game outside
+        // create the rooms
+        suroeste = new Room("South-west of the forest.");
+        start = new Room("The initial of the forest.");
+        sureste = new Room("South-east of the forest.");
+        oeste = new Room("West of the forest.");
+        centro = new Room("Center of the forest.");
+        este = new Room("East of the forest.");
+        noroeste = new Room("North-west of the forest.");
+        meta = new Room("in the reserve, Congratulations.");
+        noreste = new Room("North-east of the forest.");
+
+        // initialise room exits
+        suroeste.setExits(oeste, start, null, null);
+        start.setExits(centro, sureste, null, suroeste);
+        sureste.setExits(este, null, null, start);
+        oeste.setExits(noroeste, centro, suroeste, null);
+        centro.setExits(meta, este, start, oeste);
+        este.setExits(noreste, null, sureste, centro);
+        noroeste.setExits(null, meta, oeste, null);
+        meta.setExits(null, null, null, null);
+        noreste.setExits(null, null, este, meta);
+
+        currentRoom = start;  // start game outside
     }
 
     /**
@@ -62,7 +70,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -77,8 +85,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to hunting!");
+        System.out.println("You are the little deer and you need to scape of the hunters in the forest");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("You are " + currentRoom.getDescription());
@@ -117,7 +125,7 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            wantToQuit = goRoom(command);
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -146,12 +154,13 @@ public class Game
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
+    private boolean goRoom(Command command) 
     {
+        boolean goal = false;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
-            return;
+            return false;
         }
 
         String direction = command.getSecondWord();
@@ -178,20 +187,28 @@ public class Game
             currentRoom = nextRoom;
             System.out.println("You are " + currentRoom.getDescription());
             System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
+            if(!currentRoom.getDescription().equals("in the reserve, Congratulations.")){
+                if(currentRoom.northExit != null) {
+                    System.out.print("north ");
+                }
+                if(currentRoom.eastExit != null) {
+                    System.out.print("east ");
+                }
+                if(currentRoom.southExit != null) {
+                    System.out.print("south ");
+                }
+                if(currentRoom.westExit != null) {
+                    System.out.print("west ");
+                }
             }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
+            else if(currentRoom.getDescription().equals("Center of the forest.")){                
+                System.out.print("---You have hunted by the hunters---");
+                goal = true;
             }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
+            else{goal = true;}
             System.out.println();
-        }
+        }        
+        return goal;
     }
 
     /** 
