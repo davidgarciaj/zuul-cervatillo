@@ -50,7 +50,7 @@ public class Room
             southExit = south;
         if(west != null)
             westExit = west;
-        if(southEastExit != null)
+        if(southEast != null)
             southEastExit = southEast;
     }
 
