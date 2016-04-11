@@ -48,15 +48,15 @@ public class Game
         noreste = new Room("North-east of the forest.");
 
         // initialise room exits
-        suroeste.setExits(oeste, start, null, null, null);
-        start.setExits(centro, sureste, null, suroeste, null);
-        sureste.setExits(este, null, null, start, null);
-        oeste.setExits(noroeste, centro, suroeste, null, start);
-        centro.setExits(meta, este, start, oeste, sureste);
-        este.setExits(noreste, null, sureste, centro, null);
-        noroeste.setExits(null, meta, oeste, null, centro);
-        meta.setExits(null, null, null, null, null);
-        noreste.setExits(null, null, este, meta, null);
+        suroeste.setExits(oeste, start, null, null, null, null);
+        start.setExits(centro, sureste, null, suroeste, null, oeste);
+        sureste.setExits(este, null, null, start, null, centro);
+        oeste.setExits(noroeste, centro, suroeste, null, start, null);
+        centro.setExits(meta, este, start, oeste, sureste, noroeste);
+        este.setExits(noreste, null, sureste, centro, null, meta);
+        noroeste.setExits(null, meta, oeste, null, centro, null);
+        meta.setExits(null, null, null, null, null, null);
+        noreste.setExits(null, null, este, meta, null, null);
 
         currentRoom = start;  // start game outside
     }
