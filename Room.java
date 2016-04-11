@@ -33,6 +33,25 @@ public class Room
     }
 
     /**
+     * Devuelve el objeto room indicado
+     * @param direction  Direccion en la que se mueve el game
+     */
+    public Room getExit(String direction){
+        Room thisRoom = null;
+        if(direction.equals("north"))
+            thisRoom = northExit;
+        if(direction.equals("east"))
+            thisRoom = eastExit;
+        if(direction.equals("south"))
+            thisRoom = southExit;
+        if(direction.equals("west"))
+            thisRoom = westExit;
+        if(direction.equals("south-east"))
+            thisRoom = southEastExit;
+        return thisRoom;
+    }
+
+    /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
      * @param north The north exit.
