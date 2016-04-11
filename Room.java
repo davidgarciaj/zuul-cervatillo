@@ -58,7 +58,7 @@ public class Room
      * @ return A description of the available exits.
      */
     public String getExitString(){
-        String salidas = null;
+        String salidas = "Exits: ";
         if(northExit != null)
             salidas+= "north ";
         if(eastExit != null)
@@ -69,7 +69,7 @@ public class Room
             salidas+= "west ";
         if(southEastExit != null)
             salidas+= "south-east ";
-        return "Exits: " + salidas;
+        return  salidas;
     }
 
     /**
