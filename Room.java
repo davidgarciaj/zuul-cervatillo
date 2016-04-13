@@ -40,10 +40,10 @@ public class Room
         Room thisRoom = null;
         Iterator<Map.Entry<String, Room>> it = exits.entrySet().iterator();
         while(it.hasNext()){            
-			Map.Entry<String,Room> entry = (Map.Entry<String,Room>) it.next();
-			if(direction.equals(entry.getKey())){
-			    thisRoom = entry.getValue();
-			}
+            Map.Entry<String,Room> entry = (Map.Entry<String,Room>) it.next();
+            if(direction.equals(entry.getKey())){
+                thisRoom = entry.getValue();
+            }
         }
         return thisRoom;
     }
@@ -58,10 +58,10 @@ public class Room
         String salidas = "Exits: ";
         Iterator it = exits.entrySet().iterator();
         while(it.hasNext()){            
-			Map.Entry entry = (Map.Entry) it.next();
-			if(entry.getValue() != null){
-			    salidas+= entry.getKey() + " ";
-			}
+            Map.Entry entry = (Map.Entry) it.next();
+            if(entry.getValue() != null){
+                salidas+= entry.getKey() + " ";
+            }
         }
         return  salidas;
     }
@@ -82,6 +82,22 @@ public class Room
     public String getDescription()
     {
         return description;
+    }
+
+    /**
+     * Return a long description of this room, of the form:
+     *     You are in the 'name of room'
+     *     Exits: north west southwest
+     * @return A description of the room, including exits.
+     */
+    public String getLongDescription(){
+        String datosRoom = description + "\nExits: ";
+        Iterator it = exits.entrySet().iterator();
+        while(it.hasNext()){            
+            Map.Entry entry = (Map.Entry) it.next();
+            datosRoom+= entry.getKey() + " ";
+        }
+        return datosRoom;
     }
 
 }

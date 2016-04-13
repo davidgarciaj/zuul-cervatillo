@@ -37,15 +37,15 @@ public class Game
         Room suroeste, start, sureste, oeste, centro, este, noroeste, meta, noreste;
 
         // create the rooms
-        suroeste = new Room("South-west of the forest.");
-        start = new Room("The initial of the forest.");
-        sureste = new Room("South-east of the forest.");
-        oeste = new Room("West of the forest.");
-        centro = new Room("Center of the forest.");
-        este = new Room("East of the forest.");
-        noroeste = new Room("North-west of the forest.");
-        meta = new Room("in the reserve, Congratulations.");
-        noreste = new Room("North-east of the forest.");
+        suroeste = new Room("You are in South-west of the forest.");
+        start = new Room("You are in the initial of the forest.");
+        sureste = new Room("You are in South-east of the forest.");
+        oeste = new Room("You are in West of the forest.");
+        centro = new Room("You are in Center of the forest.");
+        este = new Room("You are in East of the forest.");
+        noroeste = new Room("You are in North-west of the forest.");
+        meta = new Room("You are in the reserve, Congratulations.");
+        noreste = new Room("You are in North-east of the forest.");
 
         // initialise room exits
         suroeste.setExit("north",oeste);
@@ -108,7 +108,6 @@ public class Game
         System.out.println("You are the little deer and you need to scape of the hunters in the forest");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
         printLocationInfo();
         System.out.println();
     }
@@ -181,13 +180,12 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
             
-            if(currentRoom.getDescription().equals("Center of the forest.")){                
+            if(currentRoom.getDescription().equals("You are in Center of the forest.")){                
                 System.out.print("---You have hunted by the hunters---");
                 goal = true;
             }
-            else if(!currentRoom.getDescription().equals("in the reserve, Congratulations.")){
+            else if(!currentRoom.getDescription().equals("You are in the reserve, Congratulations.")){
                printLocationInfo();
             }
             else{goal = true;}
@@ -200,7 +198,7 @@ public class Game
      * 
      */
     private void printLocationInfo(){
-        System.out.println(currentRoom.getExitString());
+        System.out.println(currentRoom.getLongDescription());
     }
 
     /** 
