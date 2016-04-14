@@ -133,6 +133,10 @@ public class Game
         else if (commandWord.equals("go")) {
             wantToQuit = goRoom(command);
         }
+        else if (commandWord.equals("look")) {
+            System.out.println(currentRoom.getLongDescription());
+            wantToQuit = false;
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
