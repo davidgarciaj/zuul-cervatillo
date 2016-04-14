@@ -64,9 +64,9 @@ public class Parser
     }
     
     /**
-     * @return the objet commands
+     * Print the commands
      */
-    public CommandWords getCommands(){
-        return commands;
+    public void printCommands(){
+         commands.showAll();
     }
 }
