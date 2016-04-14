@@ -19,6 +19,8 @@ public class Room
 {
     private HashMap<String,Room> exits;
     private String description;
+    private String itemDescription;
+    private float itemKg;
 
     /**
      * Create a room described "description". Initially, it has
@@ -26,10 +28,12 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String itemDescription, float itemKg) 
     {
         exits = new HashMap<>();
         this.description = description;
+        this.itemDescription = itemDescription;
+        this.itemKg = itemKg;
     }
 
     /**
@@ -37,15 +41,7 @@ public class Room
      * @param direction  Direccion en la que se mueve el game
      */
     public Room getExit(String direction){
-        Room thisRoom = null;
-        Iterator<Map.Entry<String, Room>> it = exits.entrySet().iterator();
-        while(it.hasNext()){            
-            Map.Entry<String,Room> entry = (Map.Entry<String,Room>) it.next();
-            if(direction.equals(entry.getKey())){
-                thisRoom = entry.getValue();
-            }
-        }
-        return thisRoom;
+        return exits.get(direction);
     }
 
     /**
@@ -96,6 +92,9 @@ public class Room
         while(it.hasNext()){            
             Map.Entry entry = (Map.Entry) it.next();
             datosRoom+= entry.getKey() + " ";
+        }
+        if(itemDescription != null){
+            datosRoom+="\nItem: " + itemDescription + " --> Peso: " + itemKg + " Kg.";
         }
         return datosRoom;
     }
