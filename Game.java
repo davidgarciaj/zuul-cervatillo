@@ -137,6 +137,10 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
             wantToQuit = false;
         }
+        else if (commandWord.equals("eat")) {
+            System.out.println("You have eaten now and you are not hungry any more");
+            wantToQuit = false;
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
