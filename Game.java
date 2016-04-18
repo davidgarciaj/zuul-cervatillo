@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room lastRoom;
 
     /**
      * Create the game and initialise its internal map.
@@ -150,6 +151,14 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("back")) {
+            if(lastRoom == null){
+                System.out.println("ERROR: No es posible volver a la localizacion anterior.");
+            }
+            else{
+                wantToQuit = goRoom(command);
+            }
+        }
 
         return wantToQuit;
     }
@@ -163,7 +172,7 @@ public class Game
      */
     private void printHelp() 
     {
-        
+
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
@@ -180,35 +189,54 @@ public class Game
         boolean goal = false;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return false;
+            if(command.getCommandWord().equals("back")){
+                currentRoom = lastRoom;
+                lastRoom = null;
+
+                goal = intoRoom();
+            }else{
+                System.out.println("Go where?");
+                return false;
+            }
         }
 
         String direction = command.getSecondWord();
 
         // Try to leave current room.
         Room nextRoom = null;
-            nextRoom = currentRoom.getExit(direction);
+        nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            if(lastRoom != null){
+                System.out.println("There is no door!");
+            } 
         }
         else {
+            lastRoom = currentRoom;
             currentRoom = nextRoom;
-            
-            if(currentRoom.getDescription().equals("You are in Center of the forest.")){                
-                System.out.print("---You have hunted by the hunters---");
-                goal = true;
-            }
-            else if(!currentRoom.getDescription().equals("You are in the reserve, Congratulations.")){
-               printLocationInfo();
-            }
-            else{
-                System.out.print(currentRoom.getDescription());
-                goal = true;
-            }
-            System.out.println();
-        }        
+            goal = intoRoom();
+        }     
+
+        return goal;
+    }
+
+    /**
+     * Actions to Room
+     */
+    private boolean intoRoom(){
+        boolean goal = false;
+        if(currentRoom.getDescription().equals("You are in Center of the forest.")){                
+            System.out.print("---You have hunted by the hunters---");
+            goal = true;
+        }
+        else if(!currentRoom.getDescription().equals("You are in the reserve, Congratulations.")){
+            printLocationInfo();
+        }
+        else{
+            System.out.print(currentRoom.getDescription());
+            goal = true;
+        }
+        System.out.println();
         return goal;
     }
 
