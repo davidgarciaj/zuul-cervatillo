@@ -37,22 +37,21 @@ public class Game
         Room suroeste, start, sureste, oeste, centro, este, noroeste, meta, noreste;
 
         // create the rooms
-        suroeste = new Room("You are in South-west of the forest.",
-                    "Niños por el parque te dan de comer galletas.", 0.3f);
-        start = new Room("You are in the initial of the forest.",
-                    null,0f);
-        sureste = new Room("You are in South-east of the forest.",
-                    "Bayas.", 0.1f);
-        oeste = new Room("You are in West of the forest.",
-                    "Niños por el parque te dan de comer galletas.", 0.3f);
-        centro = new Room("You are in Center of the forest.",
-                    "Cadaver de mejor amigo.",47.5f);
-        este = new Room("You are in East of the forest.",null,0f);
-        noroeste = new Room("You are in North-west of the forest.",
-                    "Cadaver de un ciervo anciano.",52.76f);
-        meta = new Room("You are in the reserve, Congratulations.",null,0);
-        noreste = new Room("You are in North-east of the forest.",
-                    "Grandes cuernos para poder defenderte.",5.2f);
+        suroeste = new Room("You are in South-west of the forest.");
+        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f);
+        start = new Room("You are in the initial of the forest.");
+        sureste = new Room("You are in South-east of the forest.");
+        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f);
+        oeste = new Room("You are in West of the forest.");
+        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f);
+        centro = new Room("You are in Center of the forest.");
+        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f);
+        este = new Room("You are in East of the forest.");
+        noroeste = new Room("You are in North-west of the forest.");
+        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f);
+        meta = new Room("You are in the reserve, Congratulations.");
+        noreste = new Room("You are in North-east of the forest.");
+        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f);
 
         // initialise room exits
         suroeste.setExit("north",oeste);
