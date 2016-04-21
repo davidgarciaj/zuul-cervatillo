@@ -104,8 +104,8 @@ public class Room
     /**
      * 
      */
-    public void addItem(String name, String itemDescription, float kg){
-        objects.add(new Item(name,itemDescription,kg));
+    public void addItem(String name, String itemDescription, float kg, boolean take){
+        objects.add(new Item(name,itemDescription,kg, take));
     }
 
 }

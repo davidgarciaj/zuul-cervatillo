@@ -25,17 +25,17 @@ public class Player
         lastRooms = new Stack<>();
         itemsWeigth = 0;
     }
-    
+
     /**
      * @return the library of lastRooms
      */
     public Stack<Room> getLastRooms(){return lastRooms;}
-    
+
     /**
      * @return the currentRoom
      */
     public Room getCurrentRoom(){return currentRoom;}
-    
+
     /**
      * Change the currentRoom
      */
@@ -71,14 +71,17 @@ public class Player
     /**
      * Add a item to player
      */
-    public void addItem(Item item){
-        if((itemsWeigth + item.getKg()) <= strong){
-            items.add(item);
-            itemsWeigth+= item.getKg();
+    public void takeItem(Item item){
+        if(item.getTake() == true){
+            if((itemsWeigth + item.getKg()) <= strong){
+                items.add(item);
+                itemsWeigth+= item.getKg();
+            }
+            else{
+                System.out.println("The item is so heavy.");
+            }
         }
-        else{
-            System.out.println("The item is so heavy.");
-        }
+        else{System.out.println("You can´t take this.");}
     }
 
     /**
