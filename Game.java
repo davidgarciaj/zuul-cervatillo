@@ -19,8 +19,6 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Stack<Room> lastRooms;
     private Player player;
 
     /**
@@ -30,7 +28,6 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        lastRooms = new Stack<>();
     }
 
     /**
@@ -87,7 +84,7 @@ public class Game
         noreste.setExit("south", este);
         noreste.setExit("west", meta);
 
-        currentRoom = start;  // start game outside
+        player = new Player(2, start);  // start game outside
     }
 
     /**
@@ -118,7 +115,7 @@ public class Game
         System.out.println("You are the little deer and you need to scape of the hunters in the forest");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        printLocationInfo();
+        player.printLocationInfo();
         System.out.println();
     }
 
@@ -144,7 +141,7 @@ public class Game
             wantToQuit = goRoom(command);
         }
         else if (commandWord.equals("look")) {
-            System.out.println(currentRoom.getLongDescription());
+            System.out.println(player.getCurrentRoom().getLongDescription());
             wantToQuit = false;
         }
         else if (commandWord.equals("eat")) {
@@ -155,7 +152,7 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("back")) {
-            if(lastRooms.empty()){
+            if(player.getLastRooms().empty()){
                 System.out.println("ERROR: No es posible volver a la localizacion anterior.");
             }
             else{
@@ -189,12 +186,14 @@ public class Game
      */
     private boolean goRoom(Command command) 
     {
+        Stack<Room> lastRooms = player.getLastRooms();
+        Room playerRoom = player.getCurrentRoom();
         boolean goal = false;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             if(command.getCommandWord().equals("back")){
-                currentRoom = lastRooms.pop();
-                goal = intoRoom();
+                playerRoom = lastRooms.pop();
+                goal = player.intoRoom();
             }else{
                 System.out.println("Go where?");
                 return false;
@@ -205,7 +204,7 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = null;
-        nextRoom = currentRoom.getExit(direction);
+        nextRoom = playerRoom.getExit(direction);
 
         if (nextRoom == null) {
             if(command.getCommandWord().equals("go")){
@@ -213,39 +212,12 @@ public class Game
             } 
         }
         else {
-            lastRooms.push(currentRoom);
-            currentRoom = nextRoom;
-            goal = intoRoom();
+            lastRooms.push(playerRoom);
+            playerRoom = nextRoom;
+            goal = player.intoRoom();
         }     
 
         return goal;
-    }
-
-    /**
-     * Actions to Room
-     */
-    private boolean intoRoom(){
-        boolean goal = false;
-        if(currentRoom.getDescription().equals("You are in Center of the forest.")){                
-            System.out.print("---You have hunted by the hunters---");
-            goal = true;
-        }
-        else if(!currentRoom.getDescription().equals("You are in the reserve, Congratulations.")){
-            printLocationInfo();
-        }
-        else{
-            System.out.print(currentRoom.getDescription());
-            goal = true;
-        }
-        System.out.println();
-        return goal;
-    }
-
-    /**
-     * 
-     */
-    private void printLocationInfo(){
-        System.out.println(currentRoom.getLongDescription());
     }
 
     /** 

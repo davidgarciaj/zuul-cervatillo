@@ -38,10 +38,17 @@ public class Item
     }
 
     /**
-     * @return     name
+     * @return     kg
      */
     public float getKg()
     {
         return kg;
+    }
+    
+    /**
+     * 
+     */
+    public String toString(){
+        return "\n" + name + ": " + description + ". Peso-->" + kg + "Kg.";
     }
 }

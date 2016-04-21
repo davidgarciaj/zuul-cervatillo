@@ -95,7 +95,7 @@ public class Room
         if(!objects.isEmpty()){
             datosRoom+="\nItems:";
             for(Item object : objects){
-                datosRoom+= "\n" + object.getName() + ": " + object.getDescription() + ". Peso-->" + object.getKg() + "Kg.";
+                datosRoom+= object;
             }
         }
         return datosRoom;

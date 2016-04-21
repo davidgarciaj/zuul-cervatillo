@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.util.Stack;
 /**
  * Write a description of class Player here.
  * 
@@ -11,15 +11,61 @@ public class Player
     private ArrayList<Item> items;
     private float strong;
     private float itemsWeigth;
+    private Room currentRoom;
+    private Stack<Room> lastRooms;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player( float strong)
+    public Player( float strong, Room currentRoom)
     {
         this.strong = strong;
         items = new ArrayList<>();
+        this.currentRoom = currentRoom;
+        lastRooms = new Stack<>();
         itemsWeigth = 0;
+    }
+    
+    /**
+     * @return the library of lastRooms
+     */
+    public Stack<Room> getLastRooms(){return lastRooms;}
+    
+    /**
+     * @return the currentRoom
+     */
+    public Room getCurrentRoom(){return currentRoom;}
+    
+    /**
+     * Change the currentRoom
+     */
+    public void setCurrentRoom(Room newRoom){currentRoom = newRoom;}
+
+    /**
+     * Actions to Room
+     */
+    public boolean intoRoom(){
+        boolean goal = false;
+        if(currentRoom.getDescription().equals("You are in Center of the forest.")){                
+            System.out.print("---You have hunted by the hunters---");
+            goal = true;
+        }
+        else if(!currentRoom.getDescription().equals("You are in the reserve, Congratulations.")){
+            printLocationInfo();
+        }
+        else{
+            System.out.print(currentRoom.getDescription());
+            goal = true;
+        }
+        System.out.println();
+        return goal;
+    }
+
+    /**
+     * 
+     */
+    public void printLocationInfo(){
+        System.out.println(currentRoom.getLongDescription());
     }
 
     /**
@@ -36,7 +82,7 @@ public class Player
     }
 
     /**
-     * Add a item to player
+     * Drop a item to player
      */
     public Item dropItem(String dropItem){
         Item drop = null;
