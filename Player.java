@@ -71,23 +71,31 @@ public class Player
     /**
      * Add a item to player
      */
-    public void takeItem(Item item){
-        if(item.getTake() == true){
-            if((itemsWeigth + item.getKg()) <= strong){
-                items.add(item);
-                itemsWeigth+= item.getKg();
+    public void takeItem(String nameItem){
+        Item item = currentRoom.giveItem(nameItem);
+        if(item != null){
+            if(item.getTake() == true){
+                if((itemsWeigth + item.getKg()) <= strong){
+                    items.add(item);
+                    itemsWeigth+= item.getKg();
+                }
+                else{
+                    System.out.println("The item is so heavy.");
+                    currentRoom.addItem(item);
+                }
             }
             else{
-                System.out.println("The item is so heavy.");
+                System.out.println("You can´t take this.");
+                currentRoom.addItem(item);
             }
         }
-        else{System.out.println("You can´t take this.");}
+        else{System.out.println("This site don´t have this item.");}
     }
 
     /**
      * Drop a item to player
      */
-    public Item dropItem(String dropItem){
+    public void dropItem(String dropItem){
         Item drop = null;
         boolean notFind = true;
         int cont = 0;
@@ -99,6 +107,21 @@ public class Player
             }
             cont++;
         }
-        return drop;
+        if(drop != null){
+            currentRoom.addItem(drop);
+        }
+    }
+
+    /**
+     * @return String information of the items.
+     */
+    public String itemList(){
+        String info = "This player don´t have any item.";
+        if(!items.isEmpty()){
+            info = "Items in the player:";
+            for(Item item : items){
+                info+= item;
+            }}
+        return info;
     }
 }
