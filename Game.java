@@ -160,12 +160,17 @@ public class Game
             }
         }
         else if (commandWord.equals("take")) {
-            if(command.hasSecondWord()){player.takeItem(command.getSecondWord());}
+            if(command.hasSecondWord()){
+                player.takeItem(command.getSecondWord());
+                System.out.println();
+            }
             else{System.out.println("What item do you want to take?.\n");}
             wantToQuit = false;
         }
         else if (commandWord.equals("drop")) {
-            if(command.hasSecondWord()){player.dropItem(command.getSecondWord());}
+            if(command.hasSecondWord()){
+                player.dropItem(command.getSecondWord());
+                System.out.println();}
             else{System.out.println("What item do you want to drop?.\n");}
             wantToQuit = false;
         }
