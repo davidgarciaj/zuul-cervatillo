@@ -10,15 +10,17 @@ public class Item
     private String name;
     private String description;
     private float kg;
+    private boolean take;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String name, String description, float kg)
+    public Item(String name, String description, float kg, boolean take)
     {
         this.name = name;
         this.description = description;
         this.kg = kg;
+        this.take = take;
     }
 
     /**
@@ -27,6 +29,14 @@ public class Item
     public String getName()
     {
         return name;
+    }
+
+    /**
+     * @return     name
+     */
+    public boolean getTake()
+    {
+        return take;
     }
 
     /**

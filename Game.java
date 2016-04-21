@@ -39,20 +39,20 @@ public class Game
 
         // create the rooms
         suroeste = new Room("You are in South-west of the forest.");
-        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f);
+        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true);
         start = new Room("You are in the initial of the forest.");
         sureste = new Room("You are in South-east of the forest.");
-        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f);
+        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f, true);
         oeste = new Room("You are in West of the forest.");
-        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f);
+        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true);
         centro = new Room("You are in Center of the forest.");
-        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f);
+        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f, false);
         este = new Room("You are in East of the forest.");
         noroeste = new Room("You are in North-west of the forest.");
-        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f);
+        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f, false);
         meta = new Room("You are in the reserve, Congratulations.");
         noreste = new Room("You are in North-east of the forest.");
-        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f);
+        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f, true);
 
         // initialise room exits
         suroeste.setExit("north",oeste);
@@ -84,7 +84,7 @@ public class Game
         noreste.setExit("south", este);
         noreste.setExit("west", meta);
 
-        player = new Player(2, start);  // start game outside
+        player = new Player(5.3f, start);  // start game outside
     }
 
     /**
@@ -141,11 +141,11 @@ public class Game
             wantToQuit = goRoom(command);
         }
         else if (commandWord.equals("look")) {
-            System.out.println(player.getCurrentRoom().getLongDescription());
+            System.out.println(player.getCurrentRoom().getLongDescription() + "\n");
             wantToQuit = false;
         }
         else if (commandWord.equals("eat")) {
-            System.out.println("You have eaten now and you are not hungry any more");
+            System.out.println("You have eaten now and you are not hungry any more.\n");
             wantToQuit = false;
         }
         else if (commandWord.equals("quit")) {
@@ -153,11 +153,30 @@ public class Game
         }
         else if (commandWord.equals("back")) {
             if(player.getLastRooms().empty()){
-                System.out.println("ERROR: No es posible volver a la localizacion anterior.");
+                System.out.println("ERROR: No es posible volver a la localizacion anterior.\n");
             }
             else{
                 wantToQuit = goRoom(command);
             }
+        }
+        else if (commandWord.equals("take")) {
+            if(command.hasSecondWord()){
+                player.takeItem(command.getSecondWord());
+                System.out.println();
+            }
+            else{System.out.println("What item do you want to take?.\n");}
+            wantToQuit = false;
+        }
+        else if (commandWord.equals("drop")) {
+            if(command.hasSecondWord()){
+                player.dropItem(command.getSecondWord());
+                System.out.println();}
+            else{System.out.println("What item do you want to drop?.\n");}
+            wantToQuit = false;
+        }
+        else if (commandWord.equals("items")) {
+            System.out.println(player.itemList() + "\n");
+            wantToQuit = false;
         }
 
         return wantToQuit;
@@ -213,7 +232,7 @@ public class Game
         }
         else {
             lastRooms.push(playerRoom);
-            playerRoom = nextRoom;
+            player.setCurrentRoom(nextRoom);
             goal = player.intoRoom();
         }     
 

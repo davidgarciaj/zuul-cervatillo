@@ -102,10 +102,34 @@ public class Room
     }
     
     /**
-     * 
+     * Introduce a item in the room
      */
-    public void addItem(String name, String itemDescription, float kg){
-        objects.add(new Item(name,itemDescription,kg));
+    public void addItem(String name, String itemDescription, float kg, boolean take){
+        objects.add(new Item(name,itemDescription,kg, take));
+    }
+    
+    /**
+     * Introduce a item in the room
+     */
+    public void addItem(Item item){
+        objects.add(item);
+    }
+    
+    /**
+     * The item go to the room
+     */
+    public Item giveItem(String name){
+        Item drop = null;
+        boolean notFind = true;
+        int cont = 0;
+        while(cont < objects.size() && notFind){
+            if(objects.get(cont).getName().equals(name)){
+                drop = objects.remove(cont);
+                notFind = false;
+            }
+            cont++;
+        }
+        return drop;
     }
 
 }
