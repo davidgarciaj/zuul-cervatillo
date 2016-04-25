@@ -113,7 +113,7 @@ public class Game
         System.out.println();
         System.out.println("Welcome to hunting!");
         System.out.println("You are the little deer and you need to scape of the hunters in the forest");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Type 'aiuto' if you need help.");
         System.out.println();
         player.printLocationInfo();
         System.out.println();
