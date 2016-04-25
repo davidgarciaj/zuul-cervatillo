@@ -24,15 +24,15 @@ public class CommandWords
     public CommandWords()
     {
         validCommands = new HashMap<>();
-        validCommands.put("go",Option.GO);
-        validCommands.put("quit",Option.QUIT);
-        validCommands.put("help",Option.HELP);
-        validCommands.put("look",Option.LOOK);
-        validCommands.put("eat",Option.EAT);
-        validCommands.put("back",Option.BACK);
-        validCommands.put("take",Option.TAKE);
-        validCommands.put("drop",Option.DROP);
-        validCommands.put("items",Option.ITEMS);
+        validCommands.put("andare",Option.GO);
+        validCommands.put("smettere",Option.QUIT);
+        validCommands.put("Aiuto",Option.HELP);
+        validCommands.put("Guarda",Option.LOOK);
+        validCommands.put("mangiare",Option.EAT);
+        validCommands.put("indietro",Option.BACK);
+        validCommands.put("prendere",Option.TAKE);
+        validCommands.put("cadere",Option.DROP);
+        validCommands.put("elementi",Option.ITEMS);
         validCommands.put("unknow",Option.UNKNOW);
     }
 
