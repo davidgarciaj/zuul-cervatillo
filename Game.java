@@ -133,25 +133,25 @@ public class Game
             return false;
         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+        Option commandWord = command.getCommandWord();
+        if (commandWord == Option.HELP) {
             printHelp();
         }
-        else if (commandWord.equals("go")) {
+        else if (commandWord == Option.GO) {
             wantToQuit = goRoom(command);
         }
-        else if (commandWord.equals("look")) {
+        else if (commandWord == Option.LOOK) {
             System.out.println(player.getCurrentRoom().getLongDescription() + "\n");
             wantToQuit = false;
         }
-        else if (commandWord.equals("eat")) {
+        else if (commandWord == Option.EAT) {
             System.out.println("You have eaten now and you are not hungry any more.\n");
             wantToQuit = false;
         }
-        else if (commandWord.equals("quit")) {
+        else if (commandWord == Option.QUIT) {
             wantToQuit = quit(command);
         }
-        else if (commandWord.equals("back")) {
+        else if (commandWord == Option.BACK) {
             if(player.getLastRooms().empty()){
                 System.out.println("ERROR: No es posible volver a la localizacion anterior.\n");
             }
@@ -159,7 +159,7 @@ public class Game
                 wantToQuit = goRoom(command);
             }
         }
-        else if (commandWord.equals("take")) {
+        else if (commandWord == Option.TAKE) {
             if(command.hasSecondWord()){
                 player.takeItem(command.getSecondWord());
                 System.out.println();
@@ -167,14 +167,14 @@ public class Game
             else{System.out.println("What item do you want to take?.\n");}
             wantToQuit = false;
         }
-        else if (commandWord.equals("drop")) {
+        else if (commandWord == Option.DROP) {
             if(command.hasSecondWord()){
                 player.dropItem(command.getSecondWord());
                 System.out.println();}
             else{System.out.println("What item do you want to drop?.\n");}
             wantToQuit = false;
         }
-        else if (commandWord.equals("items")) {
+        else if (commandWord == Option.ITEMS) {
             System.out.println(player.itemList() + "\n");
             wantToQuit = false;
         }
@@ -210,7 +210,7 @@ public class Game
         boolean goal = false;
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            if(command.getCommandWord().equals("back")){
+            if(command.getCommandWord() == Option.BACK){
                 playerRoom = lastRooms.pop();
                 goal = player.intoRoom();
             }else{
@@ -226,7 +226,7 @@ public class Game
         nextRoom = playerRoom.getExit(direction);
 
         if (nextRoom == null) {
-            if(command.getCommandWord().equals("go")){
+            if(command.getCommandWord() == Option.GO){
                 System.out.println("There is no door!");
             } 
         }
