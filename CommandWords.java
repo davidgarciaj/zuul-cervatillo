@@ -1,6 +1,5 @@
 import java.util.Iterator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * This class is part of the "World of Zuul" application. 
@@ -16,23 +15,23 @@ import java.util.Map;
 public class CommandWords
 {
     // a constant array that holds all valid command words
-    private HashMap<String, Option> validCommands;
+    private ArrayList<Option> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        validCommands = new HashMap<>();
-        validCommands.put("andare",Option.GO);
-        validCommands.put("smettere",Option.QUIT);
-        validCommands.put("aiuto",Option.HELP);
-        validCommands.put("guarda",Option.LOOK);
-        validCommands.put("mangiare",Option.EAT);
-        validCommands.put("indietro",Option.BACK);
-        validCommands.put("prendere",Option.TAKE);
-        validCommands.put("cadere",Option.DROP);
-        validCommands.put("elementi",Option.ITEMS);
+        validCommands = new ArrayList<>();
+        validCommands.add(Option.GO);
+        validCommands.add(Option.QUIT);
+        validCommands.add(Option.HELP);
+        validCommands.add(Option.LOOK);
+        validCommands.add(Option.EAT);
+        validCommands.add(Option.BACK);
+        validCommands.add(Option.TAKE);
+        validCommands.add(Option.DROP);
+        validCommands.add(Option.ITEMS);
     }
 
     /**
@@ -40,12 +39,10 @@ public class CommandWords
      */
     public void showAll(){
         String infoComandos = " ";
-        Iterator it = validCommands.entrySet().iterator();
+        Iterator<Option> it = validCommands.iterator();
         while(it.hasNext()){            
-            Map.Entry entry = (Map.Entry) it.next();
-            if(entry.getValue() != null){
-                infoComandos+= entry.getKey() + " ";
-            }
+            Option command = it.next();            
+            infoComandos+= command.getCommand() + " ";
         }
         System.out.println(infoComandos);
     }
@@ -57,10 +54,12 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-
-        if(validCommands.containsKey(aString))
-            return true;
-
+        Iterator<Option> it = validCommands.iterator();
+        while(it.hasNext()){            
+            Option command = it.next();  
+            if(command.getCommand().equals(aString))
+                return true;
+        }
         // if we get here, the string was not found in the commands
         return false;
     }
@@ -72,8 +71,12 @@ public class CommandWords
      *         if it is not a valid command word
      */
     public Option getCommandWord(String commandWord){
-        Option order = validCommands.get(commandWord);
-        if(order == null){order = Option.UNKNOW;}
-        return order;
+        Iterator<Option> it = validCommands.iterator();
+        while(it.hasNext()){            
+            Option command = it.next();            
+            if(command.getCommand().equals(commandWord))
+                return command;
+        }
+        return Option.UNKNOW;
     }
 }
