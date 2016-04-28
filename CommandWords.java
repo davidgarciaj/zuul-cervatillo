@@ -15,23 +15,14 @@ import java.util.ArrayList;
 public class CommandWords
 {
     // a constant array that holds all valid command words
-    private ArrayList<Option> validCommands;
+    private Option[] validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        validCommands = new ArrayList<>();
-        validCommands.add(Option.GO);
-        validCommands.add(Option.QUIT);
-        validCommands.add(Option.HELP);
-        validCommands.add(Option.LOOK);
-        validCommands.add(Option.EAT);
-        validCommands.add(Option.BACK);
-        validCommands.add(Option.TAKE);
-        validCommands.add(Option.DROP);
-        validCommands.add(Option.ITEMS);
+        validCommands = Option.values();
     }
 
     /**
@@ -39,10 +30,10 @@ public class CommandWords
      */
     public void showAll(){
         String infoComandos = " ";
-        Iterator<Option> it = validCommands.iterator();
-        while(it.hasNext()){            
-            Option command = it.next();            
-            infoComandos+= command.getCommand() + " ";
+        int i = 0;
+        while(i < validCommands.length){           
+            infoComandos+= validCommands[i].getCommand() + " ";
+            i++;
         }
         System.out.println(infoComandos);
     }
@@ -54,11 +45,11 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        Iterator<Option> it = validCommands.iterator();
-        while(it.hasNext()){            
-            Option command = it.next();  
-            if(command.getCommand().equals(aString))
+        int i = 0;
+        while(i < validCommands.length){  
+            if(validCommands[i].getCommand().equals(aString))
                 return true;
+            i++;
         }
         // if we get here, the string was not found in the commands
         return false;
@@ -71,11 +62,12 @@ public class CommandWords
      *         if it is not a valid command word
      */
     public Option getCommandWord(String commandWord){
-        Iterator<Option> it = validCommands.iterator();
-        while(it.hasNext()){            
-            Option command = it.next();            
+        int i = 0;
+        while(i < validCommands.length){            
+            Option command = validCommands[i];            
             if(command.getCommand().equals(commandWord))
                 return command;
+            i++;
         }
         return Option.UNKNOW;
     }
