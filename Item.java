@@ -11,16 +11,18 @@ public class Item
     private String description;
     private float kg;
     private boolean take;
+    private boolean canEat;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String name, String description, float kg, boolean take)
+    public Item(String name, String description, float kg, boolean take, boolean canEat)
     {
         this.name = name;
         this.description = description;
         this.kg = kg;
         this.take = take;
+        this.canEat = canEat;
     }
 
     /**
@@ -59,6 +61,6 @@ public class Item
      * 
      */
     public String toString(){
-        return "\n" + name + ": " + description + ". Peso-->" + kg + "Kg.";
+        return "\n" + name + ": " + description + " || Peso-->" + kg + "Kg.";
     }
 }

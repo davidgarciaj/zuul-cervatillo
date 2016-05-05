@@ -86,12 +86,7 @@ public class Room
      * @return A description of the room, including exits.
      */
     public String getLongDescription(){
-        String datosRoom = description + "\nExits: ";
-        Iterator it = exits.entrySet().iterator();
-        while(it.hasNext()){            
-            Map.Entry entry = (Map.Entry) it.next();
-            datosRoom+= entry.getKey() + " ";
-        }
+        String datosRoom = description + "\n " + getExitString();
         if(!objects.isEmpty()){
             datosRoom+="\nItems:";
             for(Item object : objects){
@@ -104,8 +99,8 @@ public class Room
     /**
      * Introduce a item in the room
      */
-    public void addItem(String name, String itemDescription, float kg, boolean take){
-        objects.add(new Item(name,itemDescription,kg, take));
+    public void addItem(String name, String itemDescription, float kg, boolean take, boolean canEat){
+        objects.add(new Item(name,itemDescription,kg, take, canEat));
     }
     
     /**

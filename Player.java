@@ -13,18 +13,29 @@ public class Player
     private float itemsWeigth;
     private Room currentRoom;
     private Stack<Room> lastRooms;
+    public static final float INITIAL_STRONG = 5.3f;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player( float strong, Room currentRoom)
+    public Player( Room currentRoom)
     {
-        this.strong = strong;
+        strong = INITIAL_STRONG;
         items = new ArrayList<>();
         this.currentRoom = currentRoom;
         lastRooms = new Stack<>();
         itemsWeigth = 0;
     }
+
+    /**
+     * Give a value to strong
+     */
+    public void setStrong(float strong){ this.strong = strong;}
+
+    /**
+     * @return the library of lastRooms
+     */
+    public float getStong(){return strong;}
 
     /**
      * @return the library of lastRooms
