@@ -139,10 +139,15 @@ public class Game
                         break;
             case GO:    wantToQuit = goRoom(command);
                         break;
-            case LOOK:  System.out.println(player.getCurrentRoom().getLongDescription() + "\n");
+            case LOOK:  player.printLocationInfo();
+                        System.out.println();
                         wantToQuit = false;
                         break;
-            case EAT:   System.out.println("You have eaten now and you are not hungry any more.\n");
+            case EAT:   if(command.hasSecondWord()){
+                            player.eatItem(command.getSecondWord());
+                            System.out.println();
+                        }
+                        else{System.out.println("What item do you want to eat?.\n");}
                         wantToQuit = false;
                         break;
             case QUIT:  wantToQuit = quit(command);
@@ -213,8 +218,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        nextRoom = playerRoom.getExit(direction);
+        Room nextRoom = playerRoom.getExit(direction);
 
         if (nextRoom == null) {
             if(command.getCommandWord() == Option.GO){

@@ -42,6 +42,14 @@ public class Item
     }
 
     /**
+     * @return     name
+     */
+    public boolean getCanEat()
+    {
+        return canEat;
+    }
+
+    /**
      * @return     description
      */
     public String getDescription()
