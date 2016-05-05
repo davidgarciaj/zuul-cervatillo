@@ -31,7 +31,7 @@ public class CommandWords
     public void showAll(){
         String infoComandos = " ";
         int i = 0;
-        while(i < validCommands.length){           
+        while(i < validCommands.length - 1){           
             infoComandos+= validCommands[i].getCommand() + " ";
             i++;
         }

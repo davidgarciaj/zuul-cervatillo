@@ -39,20 +39,20 @@ public class Game
 
         // create the rooms
         suroeste = new Room("You are in South-west of the forest.");
-        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true);
+        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
         start = new Room("You are in the initial of the forest.");
         sureste = new Room("You are in South-east of the forest.");
-        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f, true);
+        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f, true, true);
         oeste = new Room("You are in West of the forest.");
-        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true);
+        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
         centro = new Room("You are in Center of the forest.");
-        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f, false);
+        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f, false, false);
         este = new Room("You are in East of the forest.");
         noroeste = new Room("You are in North-west of the forest.");
-        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f, false);
+        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f, false, false);
         meta = new Room("You are in the reserve, Congratulations.");
         noreste = new Room("You are in North-east of the forest.");
-        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f, true);
+        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f, true, false);
 
         // initialise room exits
         suroeste.setExit("north",oeste);
@@ -84,7 +84,7 @@ public class Game
         noreste.setExit("south", este);
         noreste.setExit("west", meta);
 
-        player = new Player(5.3f, start);  // start game outside
+        player = new Player(start);  // start game outside
     }
 
     /**
@@ -139,10 +139,15 @@ public class Game
                         break;
             case GO:    wantToQuit = goRoom(command);
                         break;
-            case LOOK:  System.out.println(player.getCurrentRoom().getLongDescription() + "\n");
+            case LOOK:  player.printLocationInfo();
+                        System.out.println();
                         wantToQuit = false;
                         break;
-            case EAT:   System.out.println("You have eaten now and you are not hungry any more.\n");
+            case EAT:   if(command.hasSecondWord()){
+                            player.eatItem(command.getSecondWord());
+                            System.out.println();
+                        }
+                        else{System.out.println("What item do you want to eat?.\n");}
                         wantToQuit = false;
                         break;
             case QUIT:  wantToQuit = quit(command);
@@ -171,52 +176,6 @@ public class Game
                             wantToQuit = false;
                             break;
         }
-        /*
-        if (commandWord == Option.HELP) {
-        printHelp();
-        }
-        else if (commandWord == Option.GO) {
-        wantToQuit = goRoom(command);
-        }
-        else if (commandWord == Option.LOOK) {
-        System.out.println(player.getCurrentRoom().getLongDescription() + "\n");
-        wantToQuit = false;
-        }
-        else if (commandWord == Option.EAT) {
-        System.out.println("You have eaten now and you are not hungry any more.\n");
-        wantToQuit = false;
-        }
-        else if (commandWord == Option.QUIT) {
-        wantToQuit = quit(command);
-        }
-        else if (commandWord == Option.BACK) {
-        if(player.getLastRooms().empty()){
-        System.out.println("ERROR: No es posible volver a la localizacion anterior.\n");
-        }
-        else{
-        wantToQuit = goRoom(command);
-        }
-        }
-        else if (commandWord == Option.TAKE) {
-        if(command.hasSecondWord()){
-        player.takeItem(command.getSecondWord());
-        System.out.println();
-        }
-        else{System.out.println("What item do you want to take?.\n");}
-        wantToQuit = false;
-        }
-        else if (commandWord == Option.DROP) {
-        if(command.hasSecondWord()){
-        player.dropItem(command.getSecondWord());
-        System.out.println();}
-        else{System.out.println("What item do you want to drop?.\n");}
-        wantToQuit = false;
-        }
-        else if (commandWord == Option.ITEMS) {
-        System.out.println(player.itemList() + "\n");
-        wantToQuit = false;
-        }*/
-
         return wantToQuit;
     }
 
@@ -229,7 +188,6 @@ public class Game
      */
     private void printHelp() 
     {
-
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
@@ -260,8 +218,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        nextRoom = playerRoom.getExit(direction);
+        Room nextRoom = playerRoom.getExit(direction);
 
         if (nextRoom == null) {
             if(command.getCommandWord() == Option.GO){
@@ -271,6 +228,7 @@ public class Game
         else {
             lastRooms.push(playerRoom);
             player.setCurrentRoom(nextRoom);
+            player.setStrong(player.INITIAL_STRONG);
             goal = player.intoRoom();
         }     
 

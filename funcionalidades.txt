@@ -1,0 +1,4 @@
+Crear la posibilidad de comer algunos objetos (que se puedan comer) y que al hacerlo aumente la fuerza del jugador, 
+	si pasa a otra habitacion su fuerza vuelve a la normalidad.
+Para poder pasar ciertas zonas poner requisitos de fuerza o la necesidad de poseer un cierto objeto, este objeto puede permanecer igual
+	 o ser dañado e	incluso puede ser destruido en el proceso.

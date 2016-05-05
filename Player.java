@@ -13,18 +13,30 @@ public class Player
     private float itemsWeigth;
     private Room currentRoom;
     private Stack<Room> lastRooms;
+    public static final float INITIAL_STRONG = 5.3f;    
+    public static final float PLUS_STRONG_KG = 1.5f;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player( float strong, Room currentRoom)
+    public Player( Room currentRoom)
     {
-        this.strong = strong;
+        strong = INITIAL_STRONG;
         items = new ArrayList<>();
         this.currentRoom = currentRoom;
         lastRooms = new Stack<>();
         itemsWeigth = 0;
     }
+
+    /**
+     * Give a value to strong
+     */
+    public void setStrong(float strong){ this.strong = strong;}
+
+    /**
+     * @return the library of lastRooms
+     */
+    public float getStong(){return strong;}
 
     /**
      * @return the library of lastRooms
@@ -65,7 +77,9 @@ public class Player
      * 
      */
     public void printLocationInfo(){
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println("Player --> Strong: " + strong + 
+            " Weigth to items: " + itemsWeigth +
+            "\n\n" + currentRoom.getLongDescription());
     }
 
     /**
@@ -78,6 +92,7 @@ public class Player
                 if((itemsWeigth + item.getKg()) <= strong){
                     items.add(item);
                     itemsWeigth+= item.getKg();
+                    System.out.println("You put the " + item.getName() + "in the bag.");
                 }
                 else{
                     System.out.println("The item is so heavy.");
@@ -104,6 +119,7 @@ public class Player
                 drop = items.remove(cont);
                 itemsWeigth-= drop.getKg();
                 notFind = false;
+                System.out.println("You drop " + drop.getName() + "to the floor.");
             }
             cont++;
         }
@@ -123,5 +139,28 @@ public class Player
                 info+= item;
             }}
         return info;
+    }
+
+    /**
+     * Eat a item to up the strong
+     * @param item to eat
+     */
+    public void eatItem(String itemToEat){
+        Item eaten = null;
+        boolean notFind = true;
+        int cont = 0;
+        while(cont < items.size() && notFind){
+            Item item = items.get(cont);
+            if(item.getName().equals(itemToEat)){
+                if(item.getCanEat()){
+                    eaten = items.remove(cont);
+                    strong = strong + (eaten.getKg() * PLUS_STRONG_KG);
+                    itemsWeigth-= eaten.getKg();
+                }else{System.out.println("You can´t eat this item.");} 
+                notFind = false;
+            }
+            cont++;
+        }           
+        if(notFind){System.out.println("You don´t have this item.");}    
     }
 }
