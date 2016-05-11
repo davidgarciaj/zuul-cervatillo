@@ -36,23 +36,34 @@ public class Game
     private void createRooms()
     {
         Room suroeste, start, sureste, oeste, centro, este, noroeste, meta, noreste;
-
+        // create the items
+        Item galletas1, galletas2, bayas, cadaver1, cadaver2, cuernos;
+        
+        galletas1 = new Item("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
+        galletas2 = new Item("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
+        bayas = new Item("Bayas", "Deliciosas bayas para comer", 0.1f, true, true);
+        cadaver1 = new Item("Cadaver", "Cadaver de mejor amigo.",47.5f, false, false);
+        cadaver2 = new Item("Cadaver", "Cadaver de un ciervo anciano.",52.76f, false, false);
+        cuernos = new Item("Cuernos", "Grandes cuernos para poder defenderte.",5.2f, true, false);
+        
         // create the rooms
-        suroeste = new Room("You are in South-west of the forest.");
-        suroeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
-        start = new Room("You are in the initial of the forest.");
-        sureste = new Room("You are in South-east of the forest.");
-        sureste.addItem("Bayas", "Deliciosas bayas para comer", 0.1f, true, true);
-        oeste = new Room("You are in West of the forest.");
-        oeste.addItem("Galletas","Niños por el parque te dan de comer galletas.", 0.3f, true, true);
-        centro = new Room("You are in Center of the forest.");
-        centro.addItem("Cadaver", "Cadaver de mejor amigo.",47.5f, false, false);
-        este = new Room("You are in East of the forest.");
-        noroeste = new Room("You are in North-west of the forest.");
-        noroeste.addItem("Cadaver", "Cadaver de un ciervo anciano.",52.76f, false, false);
-        meta = new Room("You are in the reserve, Congratulations.");
-        noreste = new Room("You are in North-east of the forest.");
-        noreste.addItem("Cuernos", "Grandes cuernos para poder defenderte.",5.2f, true, false);
+        suroeste = new Room("You are in South-west of the forest.", player.INITIAL_STRONG, null);
+        start = new Room("You are in the initial of the forest.", player.INITIAL_STRONG, null);
+        sureste = new Room("You are in South-east of the forest.", player.INITIAL_STRONG, null);
+        oeste = new Room("You are in West of the forest.", 5.5f, null);
+        centro = new Room("You are in Center of the forest.", player.INITIAL_STRONG, null);
+        este = new Room("You are in East of the forest.", player.INITIAL_STRONG, null);
+        noroeste = new Room("You are in North-west of the forest.", player.INITIAL_STRONG, null);
+        meta = new Room("You are in the reserve, Congratulations.", 5.8f, cuernos);
+        noreste = new Room("You are in North-east of the forest.", player.INITIAL_STRONG, null);
+        
+        //insert items in the rooms
+        suroeste.addItem(galletas1);
+        sureste.addItem(bayas);
+        oeste.addItem(galletas2);
+        centro.addItem(cadaver2);
+        noroeste.addItem(cadaver1);
+        noreste.addItem(cuernos);
 
         // initialise room exits
         suroeste.setExit("north",oeste);
@@ -83,8 +94,9 @@ public class Game
         noroeste.setExit("south-east",centro);
         noreste.setExit("south", este);
         noreste.setExit("west", meta);
-
-        player = new Player(start);  // start game outside
+        
+        // start game outside
+        player = new Player(start);  
     }
 
     /**
@@ -218,7 +230,7 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = playerRoom.getExit(direction);
+        Room nextRoom = playerRoom.getExit(direction, player.getStrong(),player.getItems());
 
         if (nextRoom == null) {
             if(command.getCommandWord() == Option.GO){

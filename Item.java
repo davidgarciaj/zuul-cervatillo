@@ -71,4 +71,17 @@ public class Item
     public String toString(){
         return "\n" + name + ": " + description + " || Peso-->" + kg + "Kg.";
     }
+    
+    /**
+     * Prove if the item given its equal to this item
+     * 
+     * @param item  comparative item
+     * @return true if the item its equal, false if this is diferent
+     */
+    public boolean equalsItem(Item item){
+        if((name.equals(item.getName())) && (description.equals(item.getDescription())) &&
+            (kg == item.getKg()) && (take == item.getTake()) && canEat == item.getCanEat())
+            return true;
+        return false;
+    }
 }
