@@ -36,7 +36,7 @@ public class Player
     /**
      * @return the library of lastRooms
      */
-    public float getStong(){return strong;}
+    public float getStrong(){return strong;}
 
     /**
      * @return the library of lastRooms
@@ -46,7 +46,12 @@ public class Player
     /**
      * @return the currentRoom
      */
-    public Room getCurrentRoom(){return currentRoom;}
+    public Room getCurrentRoom(){return currentRoom;}    
+
+    /**
+     * @return the items
+     */
+    public ArrayList<Item> getItems(){return items;}
 
     /**
      * Change the currentRoom
@@ -92,7 +97,7 @@ public class Player
                 if((itemsWeigth + item.getKg()) <= strong){
                     items.add(item);
                     itemsWeigth+= item.getKg();
-                    System.out.println("You put the " + item.getName() + "in the bag.");
+                    System.out.println("You put the " + item.getName() + " in the bag.");
                 }
                 else{
                     System.out.println("The item is so heavy.");

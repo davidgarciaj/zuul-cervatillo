@@ -21,6 +21,9 @@ public class Room
     private HashMap<String,Room> exits;
     private String description;
     private ArrayList<Item> objects;
+    //Restrinciones
+    private float neededStrong;
+    private Item neededItem;
 
     /**
      * Create a room described "description". Initially, it has
@@ -28,19 +31,46 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, float neededStrong, Item neededItem) 
     {
         exits = new HashMap<>();
         this.description = description;
         objects = new ArrayList<>();
+        //Restrinciones
+        this.neededStrong = neededStrong;
+        this.neededItem = neededItem;
     }
 
     /**
      * Devuelve el objeto room indicado
      * @param direction  Direccion en la que se mueve el game
+     * @param strong needed strong in the player to enter
+     * @param item needed item in the player to enter
      */
-    public Room getExit(String direction){
-        return exits.get(direction);
+    public Room getExit(String direction, float strong, ArrayList<Item> items){
+        Room nextRoom = exits.get(direction);
+        boolean find = false;
+        if(strong >= nextRoom.getNeededStrong()){
+            if(nextRoom.getNeededItem() != null){
+                int i = 0;
+                while(i < items.size() && !find){
+                    if(items.get(i).equalsItem(nextRoom.getNeededItem())){
+                        find = true;
+                    }
+                    i++;
+                }
+                if(!find){
+                System.out.println("You dont have the needed item to pass, you need to have the item '"
+                    + nextRoom.getNeededItem().getName() + "'.");
+                    nextRoom = null;
+                }
+            }
+        }else{
+            System.out.println("You dont have the needed strong to pass, you need " 
+                + nextRoom.getNeededStrong() + " if you want pass.");
+            nextRoom = null;
+        }
+        return nextRoom;
     }
 
     /**
@@ -74,6 +104,22 @@ public class Room
     /**
      * @return The description of the room.
      */
+    public float getNeededStrong()
+    {
+        return neededStrong;
+    }
+
+    /**
+     * @return The description of the room.
+     */
+    public Item getNeededItem()
+    {
+        return neededItem;
+    }
+
+    /**
+     * @return The description of the room.
+     */
     public String getDescription()
     {
         return description;
@@ -95,21 +141,21 @@ public class Room
         }
         return datosRoom;
     }
-    
+
     /**
      * Introduce a item in the room
      */
     public void addItem(String name, String itemDescription, float kg, boolean take, boolean canEat){
         objects.add(new Item(name,itemDescription,kg, take, canEat));
     }
-    
+
     /**
      * Introduce a item in the room
      */
     public void addItem(Item item){
         objects.add(item);
     }
-    
+
     /**
      * The item go to the room
      */
