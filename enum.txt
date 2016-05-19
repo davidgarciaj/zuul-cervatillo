@@ -1,0 +1,17 @@
+1_ Equipos de una liga
+
+2_ Tanto como indiques al crear la clase enum
+3_ En mayusculas
+4_ 
+public enum Equipo
+{
+	BARÇA("FC Barcelona",1), REAL_MADRID("Real Madrid",2),
+	SEVILLA("Sevilla FC",4), VILLAREAL("Villareal",7); 
+}
+5_ Los objetos ya vienen definidos y declarados dentro de la clase
+6_ No porque los objetos ya han sido todos creados cuando declaraste la clase
+7_ Para que te devuelvan los valores de los objetos dentro de enum
+8_ Si, los atributos iguales para todos los objetos que desciendan de los objetos de la clase enum
+9_ Porque no necesitan crear objetos de tipo enum, ya estan creados
+10_ equals
+11_ puedes tratarlos directamente como objetos sin temor a cometer errores al nombrarlos, puedes utilizar los metodos dentro de la clase enum en ellos para facilitarte labores.
